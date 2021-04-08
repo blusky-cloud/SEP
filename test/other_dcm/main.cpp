@@ -5,4 +5,5 @@ int main()
 {
     DCM test_dcm;
     std::cout << "TESTING" << std::endl;
+    //test_dcm.OtherUpdate;
 }

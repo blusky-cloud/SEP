@@ -22,14 +22,32 @@ public:
         resource_pool_.emplace_back(dcap);
         resource_pool_.emplace_back(edev);
         resource_pool_.emplace_back(sdev);
+        
         DCapResource dcapR(dcap);
         sep::DeviceCapability real_sep_dcap;
         DCapResource dcapR_2(real_sep_dcap);
+        
+        resource_objects_.emplace_back(&dcapR);
+        resource_objects_.emplace_back(&dcapR_2);
+        
+        for (auto resource : resource_objects_)
+        {
+            if ( resource->poll_rate() )
+                std::cout << "the poll rate here is: " << resource->poll_rate() << std::endl;
+        }
         
     };
     ~DCM()
     {
     };
+    void OtherUpdate()
+    {
+        for (auto resource : resource_objects_)
+        {
+            if ( resource->poll_rate() )
+                std::cout << "the poll rate here is: " << resource->poll_rate() << std::endl;
+        }
+    }
     void Update (double elapsed_time)
     {
         for (auto resource : resource_pool_)
@@ -65,6 +83,7 @@ public:
 
 private:
     std::vector<sep::Resource*> resource_pool_;
+    std::vector<DCMBaseResource*> resource_objects_;
 };
 
 

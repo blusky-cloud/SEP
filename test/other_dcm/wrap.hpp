@@ -10,7 +10,7 @@ class DCMBaseResource {
     public:
         DCMBaseResource() {}
         virtual ~DCMBaseResource() {}
-        virtual int poll_rate(int new_poll_rate) {}
+        virtual int poll_rate() {}
         virtual std::string we_could_even_pass_pack_CSV_or_xml() {}   
         virtual void or_pass_it_in(std::string incoming) {}
 };
@@ -28,7 +28,8 @@ class DCapResource : public DCMBaseResource {
             {
                 std::cout << "match" << std::endl;
                 sep::DeviceCapability * d = dynamic_cast<sep::DeviceCapability*>(model);
-                std::cout << d->poll_rate << std::endl;
+                dcap_model_ = *d;
+                std::cout << dcap_model_.poll_rate << std::endl;
             }
         }
         int poll_rate() 
