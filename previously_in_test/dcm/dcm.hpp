@@ -4,6 +4,7 @@
 #include <sep/models.hpp>
 #include <vector>
 #include <memory>
+#include "wrap.hpp"
 
 struct Entity
 {
@@ -21,6 +22,8 @@ public:
         resource_pool_.emplace_back(dcap);
         resource_pool_.emplace_back(edev);
         resource_pool_.emplace_back(sdev);
+        DCapResource dcapR(*dcap);
+        
     };
     ~DCM()
     {
@@ -30,6 +33,13 @@ public:
         for (auto resource : resource_pool_)
         {
             std::cout << elapsed_time << std::endl;
+            /*if ( resource->type_info == "dCap" )
+            {
+                resource->poll_rate = 1111;
+                std::cout << resource->poll_rate << std::endl;
+                //sep::DeviceCapability *dcap2 = dynamic_cast<sep::DeviceCapability*>(resource);
+                //std::cout << dcap2->poll_rate << std::endl;
+            }*/
             if ( sep::DeviceCapability *dcap = dynamic_cast<sep::DeviceCapability*>(resource) ) 
             {
                 dcap->poll_rate = 9000;

@@ -1,26 +1,14 @@
-include(FindXercesC)
-find_package(XercesC REQUIRED)
-find_package(Boost REQUIRED)
-
-set(COMPONENT_NAME XML)
-add_library(${COMPONENT_NAME} STATIC
-    adapter.cpp
-    xml_validator.cpp
-    
-)
+# http://mariobadr.com/creating-a-header-only-library-with-cmake.html
+set(COMPONENT_NAME Model)
+add_library(${COMPONENT_NAME} INTERFACE)
 
 # Create ALIAS targets.
 add_library( ${PROJECT_NAME}::${COMPONENT_NAME} ALIAS ${COMPONENT_NAME} )
 
-target_link_libraries(${COMPONENT_NAME} Model Boost::boost ${XercesC_LIBRARY})
-
 target_include_directories(
-    ${COMPONENT_NAME} PUBLIC
+    ${COMPONENT_NAME} INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
-    ${Model_INCLUDE_DIRS}
-    ${Boost_INCLUDE_DIRS}
-    ${XercesC_INCLUDE_DIR}
 )
 
 # install the target and create export-set
