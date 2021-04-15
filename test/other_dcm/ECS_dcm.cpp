@@ -20,6 +20,7 @@ ECS_DCM::ECS_DCM()
     world_.component<Start>();
     world_.component<Duration>();
     world_.component<sep::CurrentStatus>(); //event_status.hpp
+    world_.component<ActiveNow>(); //if we use a tag rather then component, we can query all "active" resources
 
     //world_.system<sep::FlowReservationResponse>("SystemPrint").iter(SystemPrint);
 }
@@ -54,7 +55,9 @@ void ECS_DCM::PrintWholeFlow(sep::FlowReservationResponse f)
     //Resource > RespondatbleResource > RespondableSubscribableIdentifiedObject > Event
     std::cout << "creation_time" << f.creation_time << std::endl; //TimeType, which is int64_t
     //These are from EventStatus, which is contained by event
-    std::cout << "current_status enum: " << static_cast<std::uint8_t>(f.event_status.current_status) << std::endl; //from enum
+    std::cout << "current_status enum: "; //<< static_cast<std::uint8_t>(f.event_status.current_status) << std::endl; //from enum
+    if (f.event_status.current_status == sep::CurrentStatus::kActive) //I've just been using kActive for testing
+        std::cout << " kActive " << std::endl;
     std::cout << "date_time: " <<  f.event_status.date_time << std::endl;
     std::cout << "potentially_superceded: " << f.event_status.potentially_superseded<< std::endl;//bool
     std::cout << "potentially_superceded_time: " << f.event_status.potentially_superseded_time << std::endl;//int64_t
@@ -122,7 +125,14 @@ void ECS_DCM::ECSPrefabTest()
         .add_instanceof(FlowResRspPrefab)
         .add<sep::FlowReservationResponse>().set<sep::FlowReservationResponse>({example_sep_flowres})
         .add<Start>().set<Start>({example_sep_flowres.interval.start}) //that's the magic... built-in parsing
-        .add<Active>().set<Active>({example_sep_flowres.event_status.current_status == sep::CurrentStatus::kActive});
+        .add<sep::CurrentStatus>().set<sep::CurrentStatus>({example_sep_flowres.event_status.current_status})
+        .add<Active>().set<Active>({example_sep_flowres.event_status.current_status == sep::CurrentStatus::kActive});//bool for active or not, many other ways to do this
+
+    //test a mechanism to add an active now tag based on CurrentStatus enum component state
+    if ( *(SingleFlowResRespEntity.get<sep::CurrentStatus>()) == sep::CurrentStatus::kActive )
+        SingleFlowResRespEntity.add<ActiveNow>(); //this works to add a tag
+    
+    //the ActiveNow tag could now be used in queries
     
     //--------Alright, now we have an entity made from a prefab, lets register a system and then use it
     world_.system<sep::FlowReservationResponse>("PrintFlows").iter(PrintFlows);

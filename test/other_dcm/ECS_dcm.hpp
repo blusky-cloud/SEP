@@ -12,9 +12,9 @@ class ECS_DCM : public DCM {
         void PrintWholeFlow(sep::FlowReservationResponse f);
         sep::FlowReservationResponse MakeFakeFlowResResp(Start num = 42, Duration drn = 314, sep::CurrentStatus cst = sep::CurrentStatus::kActive);
         void ECSPrefabTest();
-        static void PrintFlows(flecs::iter& it, sep::FlowReservationResponse* f)
+        static void PrintFlows(flecs::iter& it, sep::FlowReservationResponse* f)//iterate through all entities that have an sep::FlowReservationResponse object as a component
         {
-            ECS_DCM dcm;
+            ECS_DCM dcm;//had to fiddle a lot to get this working, maybe a better workaround?
             for (auto i : it)
             {   
                 dcm.PrintWholeFlow(f[i]);
@@ -23,10 +23,4 @@ class ECS_DCM : public DCM {
 
     protected:
         flecs::world world_;
-        ecs_entity_t flowres_entity_;
-        Start start1_;
-        Duration dur1_;
-        Active actv1_;
-        sep::CurrentStatus status1_;
-
 };
