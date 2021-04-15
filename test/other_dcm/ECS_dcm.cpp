@@ -56,8 +56,8 @@ void ECS_DCM::PrintWholeFlow(sep::FlowReservationResponse f)
     //These are from EventStatus, which is contained by event
     std::cout << "current_status enum: " << static_cast<std::uint8_t>(f.event_status.current_status) << std::endl; //from enum
     std::cout << "date_time: " <<  f.event_status.date_time << std::endl;
-    std::cout << "potentially_superceded: " << f.event_status.potentially_superseded<< std::endl;
-    std::cout << "potentially_superceded_time: " << f.event_status.potentially_superseded_time << std::endl;
+    std::cout << "potentially_superceded: " << f.event_status.potentially_superseded<< std::endl;//bool
+    std::cout << "potentially_superceded_time: " << f.event_status.potentially_superseded_time << std::endl;//int64_t
     std::cout << "reason: " << f.event_status.reason << std::endl;
     //from datetimeinterval, contained by event
     std::cout << "duration: " << f.interval.duration << std::endl;
