@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 
+/* gotta comment out so I can mess with struct initialization lists
 
 class DCMBaseResource {
     public:
@@ -78,4 +79,5 @@ class SelfDeviceResource : public DCMBaseResource {
         FlowResWrap(const FlowResWrap &);
         ~FlowResWrap();
 }
-*/
+I guess there should tecnically be another close comment here
+ */ 

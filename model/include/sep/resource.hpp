@@ -10,7 +10,7 @@ namespace sep
     {
         std::string href; // optional
         std::string type_info;
-        virtual void ForPolymorphismOnly (){};
+        //virtual void ForPolymorphismOnly (){};
     };
 }; // namespace sep
 

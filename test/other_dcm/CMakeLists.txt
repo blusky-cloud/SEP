@@ -19,6 +19,7 @@ FetchContent_MakeAvailable(googletest flecs)
 add_executable (test_executable
     main.cpp
     wrap.cpp
+    ECS_dcm.cpp
 )
 
 target_link_libraries(test_executable gtest gtest_main Model XML flecs pthread)

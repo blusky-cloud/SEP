@@ -9,8 +9,9 @@ namespace sep
     struct Resource
     {
         std::string href; // optional
-        std::string type_info;
-        virtual void ForPolymorphismOnly (){};
+        //std::string type_info;
+        //virtual void ForPolymorphismOnly (){};
+        //it turns our you can't use list-initialization with virtual member functions
     };
 }; // namespace sep
 
