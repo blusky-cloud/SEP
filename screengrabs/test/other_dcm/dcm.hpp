@@ -84,7 +84,7 @@ class DCM : public Entity
         }
     protected:
         std::vector<sep::Resource*> resource_pool_;
-        //std::vector<DCMBaseResource*> resource_objects_;
+        std::vector<DCMBaseResource*> resource_objects_;
         sep::Resource *dcap_;
 };
 
