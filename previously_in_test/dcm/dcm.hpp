@@ -33,13 +33,6 @@ public:
         for (auto resource : resource_pool_)
         {
             std::cout << elapsed_time << std::endl;
-            /*if ( resource->type_info == "dCap" )
-            {
-                resource->poll_rate = 1111;
-                std::cout << resource->poll_rate << std::endl;
-                //sep::DeviceCapability *dcap2 = dynamic_cast<sep::DeviceCapability*>(resource);
-                //std::cout << dcap2->poll_rate << std::endl;
-            }*/
             if ( sep::DeviceCapability *dcap = dynamic_cast<sep::DeviceCapability*>(resource) ) 
             {
                 dcap->poll_rate = 9000;
